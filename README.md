@@ -6,7 +6,7 @@ Workspace : Jupyter Notebook<br>
 ## Accuracy
 |Model|Acc|
 |---|---|
-|<span style="color:blue">VGG16</span>||
+|<span style="color:blue">VGG16_bn</span>|91.34|
 |<span style="color:blue">GoogLeNet</span>||
 |<span style="color:blue">ResNet18</span>||
 
