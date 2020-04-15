@@ -7,8 +7,8 @@ Workspace : Jupyter Notebook<br>
 |Model|Acc|
 |---|---|
 |<span style="color:blue">VGG16_bn</span>|91.34|
-|<span style="color:blue">GoogLeNet</span>||
-|<span style="color:blue">ResNet18</span>||
+|<span style="color:blue">GoogLeNet</span>|85.24|
+|<span style="color:blue">ResNet18</span>|93.74|
 
 <br>
 
