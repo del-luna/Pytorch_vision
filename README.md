@@ -1,10 +1,18 @@
-# CIFAR10 with Pytorch<br>
+# Pytorch tutorial<br>
 
-Using Cifar-10 Dataset<br>  
-Workspace : Jupyter Notebook<br>
-no update
+
+
+This repository is a tutorial for analyzing Pytorch internal code<br>
+
+There is also an introductory paper implementation.
+
+
+
+
+
 <br>
-## Accuracy
+
+## Vision Model
 |Model|Acc|
 |---|---|
 |<span style="color:blue">VGG16_bn</span>|91.34|
@@ -16,4 +24,4 @@ no update
 
 
 ## Requirements<br>
-Pytorch -- 1.4.0
+Pytorch -- 1.8.1
