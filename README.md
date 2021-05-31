@@ -1,11 +1,8 @@
-# Pytorch tutorial<br>
+# Pytorch Vison Models<br>
 
 
 
-This repository is a tutorial for analyzing Pytorch internal code<br>
-
-There is also an introductory paper implementation.
-
+This repository implemented vision models in PyTorch. <br>
 
 
 
