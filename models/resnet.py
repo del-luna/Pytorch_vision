@@ -50,5 +50,12 @@ class Bottleneck(nn.Module):
 class ResNet(nn.Module):
     def __init__(self, block, num_blokcs, num_classes=10):
         super(ResNet, self).__init__()
-    
+        #After defining only the first layer, the rest are defined by stacking blocks
+        #e.g. 
+        #self.conv1 = nn.Conv2d(~~~)
+        #self.bn1 = nn.BatchNorm2d(~~~)
+        #self.layer1 = self._make_layer(block, dim, num_blocks[0], stride=1)
+        #self.layer2 = ~~~
+        
+        #to be define def _make_layer(self, block, planes, num_blocks, stride)
     
