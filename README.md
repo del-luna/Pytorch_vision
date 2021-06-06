@@ -4,6 +4,8 @@
 
 This repository implemented vision models in PyTorch. <br>
 
+using CIFAR-10 & CIFAR100<br>
+
 
 
 
