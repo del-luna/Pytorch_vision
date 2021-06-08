@@ -1,5 +1,8 @@
 import argparse
 import os
+import torch
+
+from dataset import *
 
 '''
 main함수에 save function으로 따로 빼는게 나은지 고민해봐야함.
