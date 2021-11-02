@@ -3,14 +3,9 @@ import os
 import torch
 
 from dataset import *
+from utils import *
 
-'''
-main함수에 save function으로 따로 빼는게 나은지 고민해봐야함.
-dataset.py만들기
-Resnet을 구현해놓고 구현체를 import하는 방법 생각해보기.
-근데 이러면 attention stem..을 resnet.py에 넘겨줘야하는데 어케관리하지..?
 
-'''
 
 
 def train(model, data_iter, optimizer, criterion, epoch, args):
@@ -62,22 +57,12 @@ def eval(model, data_iter, args):
             best_acc = acc
 
 
-
-def get_args():
-    parser = argparse.ArgumentParser('Parameter')
-    
-    parser.add_argument('--model-name',type=str, default='ResNet26', help='ResNet26, ResNet38, ResNet50')
-    parser.add_argument('--batch-size', type=int, default=32)
-    parser.add_argument('--lr', type=float, default=1e-1)
-    parser.add_argument('--epochs', type=int, default=100)
-
-    args = parser.parse_args()
-    return args
-
 def main(args):
     train_loader, test_loader = load_data(args)
-
+    if args.dat
 
 if __name__ == '__main__':
     args = get_args()
-    
+    main(args)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    best_acc, start_epoch = 0, 0
