@@ -5,9 +5,6 @@ import torch
 from dataset import *
 from utils import *
 
-
-
-
 def train(model, data_iter, optimizer, criterion, epoch, args):
     print('Start Training...')
     model.train()
@@ -59,7 +56,16 @@ def eval(model, data_iter, args):
 
 def main(args):
     train_loader, test_loader = load_data(args)
-    if args.dat
+    if args.dataset == 'CIFAR10':
+        num_classes = 10
+    elif args.dataset == 'CIFAR100':
+        num_classes = 100
+    elif args.dataset == 'IMAGENET':
+        pass
+    
+    if args.cuda:
+        model = model.cuda()
+    
 
 if __name__ == '__main__':
     args = get_args()
