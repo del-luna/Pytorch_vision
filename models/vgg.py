@@ -15,9 +15,12 @@ class VGG(nn.Module):
         self.classifier = nn.Linear(512, 10)
 
     def forward(self, x):
-        pass
+        out = self.features(x)
+        out = out.view(out.size(0), -1)
+        out = self.classifier(out)
+        return out
 
-    def _make_layer(self, cfg):
+    def _make_layers(self, cfg):
         layers = []
         in_channels = 3
         for out_channels in cfg:

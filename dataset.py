@@ -1,11 +1,15 @@
 import torch
 from torchvision import datasets, transforms
 
+'''
+cifar dataset cannot be downloaded due to ssl error
+'''
+
 def load_data(args):
     print(f'Load Dataset{args.dataset}')
 
     if args.dataset == 'CIFAR10':
-        transform_tain = transforms.Compose([
+        transform_train = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
@@ -24,14 +28,14 @@ def load_data(args):
         ])
 
         train_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR10('data', train=True, download=True, transform=transform_train),
+            datasets.CIFAR10('./data', train=True, download=False, transform=transform_train),
             batch_size=args.batch_size,
             shuffle=True,
             num_workers=args.num_workers
         )
 
         test_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR10('data', train=False, transform=transform_test),
+            datasets.CIFAR10('./data', train=False, transform=transform_test),
             batch_size=args.batch_size,
             shuffle=False,
             num_workers=args.num_workers
@@ -56,14 +60,14 @@ def load_data(args):
         ])
 
         train_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR100('data', train=True, download=True, transform=transform_train),
+            datasets.CIFAR100('./data', train=True, download=False, transform=transform_train),
             batch_size=args.batch_size,
             shuffle=True,
             num_workers=args.num_workers
         )
 
         test_loader = torch.utils.data.DataLoader(
-            datasets.CIFAR100('data', train=False, transform=transform_test),
+            datasets.CIFAR100('./data', train=False, transform=transform_test),
             batch_size=args.batch_size,
             shuffle=False,
             num_workers=args.num_workers
@@ -78,14 +82,14 @@ def load_data(args):
             )
         ])
         train_loader = torch.utils.data.DataLoader(
-            datasets.MNIST('data', train=True, download=True, transform=transform),
+            datasets.MNIST('./data', train=True, download=True, transform=transform),
             batch_size=args.batch_size,
             shuffle=True,
             num_workers=args.num_workers
         )
 
         test_loader = torch.utils.data.DataLoader(
-            datasets.MNIST('data', train=False, transform=transform),
+            datasets.MNIST('./data', train=False, transform=transform),
             batch_size=args.batch_size,
             shuffle=False,
             num_workers=args.num_workers
