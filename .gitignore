@@ -10,7 +10,9 @@ package.json
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
-.__pycache__
-*/.__pycache__/*
-.checkpoint
-*/.checpoint/*
+__pycache__
+*/__pycache__/*
+checkpoint
+*/checpoint/*
+.vscode
+*/.vscode/*
