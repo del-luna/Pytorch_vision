@@ -1,0 +1,16 @@
+_site
+.DS_Store
+.jekyll
+.bundle
+.sass-cache
+Gemfile
+Gemfile.lock
+node_modules
+package.json
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+.__pycache__
+*/.__pycache__/*
+.checkpoint
+*/.checpoint/*
