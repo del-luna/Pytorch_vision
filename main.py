@@ -38,9 +38,8 @@ def train(model, train_loader, optimizer, criterion, args):
         train_acc += acc
         step += 1
 
-    return train_acc
+    return train_acc/len(train_loader)
             
-
 def eval(model, test_loader, args):
     print('evaluation ...')
     model.eval() #change evaluation
@@ -56,10 +55,8 @@ def eval(model, test_loader, args):
     acc = 100. * float(correct) / len(test_loader.dataset)
     print('Test acc: {0:.2f}'.format(acc))
     return acc
-       
 
 def main(args):
-
     '''
     load_data를 통해 data loader 정의(train, test)
     args.model_name에 저장된 model_name으로 모델 define
@@ -91,47 +88,101 @@ def main(args):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
 
-    
-    #training loop
-    train_acc_list = []
-    eval_acc_list = []
+    if args.pretrained_path:
+        print("load checkpoint")
+        ck_point = torch.load(args.pretrained_path)
+        model.load_state_dict(ck_point['state_dict'])
+        optimizer.load_state_dict(ck_point['optimizer'])
+        best_acc = ck_point['best_acc']
+        pre_epoch = ck_point['epoch']
+        train_acc_list = ck_point['train_acc_list']
+        eval_acc_list = ck_point['eval_acc_list']
 
-    for epoch in tqdm(range(1, args.epochs + 1)):
-        train_acc = train(model, train_loader, optimizer, criterion, args)
-        eval_acc = eval(model, test_loader, args)
-        train_acc_list.append(train_acc)
-        eval_acc_list.append(eval_acc)
+        for epoch in tqdm(range(pre_epoch, args.epochs + 1)):
+            train_acc = train(model, train_loader, optimizer, criterion, args)
+            eval_acc = eval(model, test_loader, args)
+            train_acc_list.append(train_acc)
+            eval_acc_list.append(eval_acc)
 
-        is_best = eval_acc > best_acc
-        best_acc = max(eval_acc, best_acc)
+            is_best = eval_acc > best_acc
+            best_acc = max(eval_acc, best_acc)
 
-        if not os.path.isdir('checkpoint'):
-            os.mkdir('checkpoint')
-        filename = 'model_' + str(args.dataset) + '_' + str(args.model_name) + '_ckpt.tar'
-        print('filename :: ', filename)
+            if not os.path.isdir('checkpoint'):
+                os.mkdir('checkpoint')
+            filename = 'model_' + str(args.dataset) + '_' + str(args.model_name) + '_ckpt.tar'
+            print('filename :: ', filename)
 
-        parameters = get_model_parameters(model)
+            parameters = get_model_parameters(model)
 
-        if torch.cuda.device_count() > 1:
-            save_checkpoint({
-                'epoch': epoch,
-                'arch': args.model_name,
-                'state_dict': model.module.state_dict(),
-                'best_acc': best_acc,
-                'optimizer': optimizer.state_dict(),
-                'parameters': parameters,
-            }, is_best, filename)
-        else:
-            save_checkpoint({
-                'epoch': epoch,
-                'arch': args.model_name,
-                'state_dict': model.state_dict(),
-                'best_acc': best_acc,
-                'optimizer': optimizer.state_dict(),
-                'parameters': parameters,
-            }, is_best, filename)
+            if torch.cuda.device_count() > 1:
+                save_checkpoint({
+                    'epoch': epoch,
+                    'arch': args.model_name,
+                    'state_dict': model.module.state_dict(),
+                    'best_acc': best_acc,
+                    'optimizer': optimizer.state_dict(),
+                    'parameters': parameters,
+                    'train_acc_list':train_acc_list,
+                    'eval_acc_list': eval_acc_list,
+                }, is_best, filename)
+            else:
+                save_checkpoint({
+                    'epoch': epoch,
+                    'arch': args.model_name,
+                    'state_dict': model.state_dict(),
+                    'best_acc': best_acc,
+                    'optimizer': optimizer.state_dict(),
+                    'parameters': parameters,
+                    'train_acc_list':train_acc_list,
+                    'eval_acc_list': eval_acc_list,
+                }, is_best, filename)
 
-    visualize(train_acc_list, eval_acc_list, mode='acc')
+        visualize(train_acc_list, eval_acc_list, mode='acc')
+    else:
+        #scratch training loop
+        train_acc_list = []
+        eval_acc_list = []
+
+        for epoch in tqdm(range(1, args.epochs + 1)):
+            train_acc = train(model, train_loader, optimizer, criterion, args)
+            #print(f'train acc: {train_acc}')
+            eval_acc = eval(model, test_loader, args)
+            train_acc_list.append(train_acc)
+            eval_acc_list.append(eval_acc)
+            is_best = eval_acc > best_acc
+            best_acc = max(eval_acc, best_acc)
+
+            if not os.path.isdir('checkpoint'):
+                os.mkdir('checkpoint')
+            filename = 'model_' + str(args.dataset) + '_' + str(args.model_name) + '_ckpt.tar'
+            print('filename :: ', filename)
+
+            parameters = get_model_parameters(model)
+
+            if torch.cuda.device_count() > 1:
+                save_checkpoint({
+                    'epoch': epoch,
+                    'arch': args.model_name,
+                    'state_dict': model.module.state_dict(),
+                    'best_acc': best_acc,
+                    'optimizer': optimizer.state_dict(),
+                    'parameters': parameters,
+                    'train_acc_list':train_acc_list,
+                    'eval_acc_list': eval_acc_list,
+                }, is_best, filename)
+            else:
+                save_checkpoint({
+                    'epoch': epoch,
+                    'arch': args.model_name,
+                    'state_dict': model.state_dict(),
+                    'best_acc': best_acc,
+                    'optimizer': optimizer.state_dict(),
+                    'parameters': parameters,
+                    'train_acc_list':train_acc_list,
+                    'eval_acc_list': eval_acc_list,
+                }, is_best, filename)
+
+        visualize(train_acc_list, eval_acc_list, mode='acc')
 
 if __name__ == '__main__':
 
@@ -140,11 +191,12 @@ if __name__ == '__main__':
     parser.add_argument('--model-name',type=str, default='VGG19', help='VGG19, GoogLeNet, ResNet18, ResNet34, ResNet50, EfficientNetB0')
     parser.add_argument('--cuda', type=bool, default=True)
     parser.add_argument('--batch-size', type=int, default=32)
-    parser.add_argument('--lr', type=float, default=1e-1)
+    parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--momentum', type=float, default=0.9)
-    parser.add_argument('--weight-decay', type=float, default=1e-4)
+    parser.add_argument('--weight-decay', type=float, default=5e-4)
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--num_workers',type=int, default=0)
+    parser.add_argument('--pretrained_path',type=str, default='./checkpoint/model_CIFAR10_VGG19_ckpt.tar')
     '''
     
     best_acc, start_epoch = 0, 1

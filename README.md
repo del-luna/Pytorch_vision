@@ -14,11 +14,21 @@ using CIFAR-10 & CIFAR100<br>
 ## Vision Model
 |Model|Acc|
 |---|---|
-|<span style="color:blue">VGG16_bn</span>|91.34|
+|<span style="color:blue">VGG19</span>|86.34|
 |<span style="color:blue">GoogLeNet</span>|85.24|
 |<span style="color:blue">ResNet18</span>|93.74|
 
 <br>
+
+
+
+## Result
+
+
+
+- VGG19
+
+![VGG19_acc](C:\Users\user\git\torch\visualization\VGG19_acc.png)
 
 
 
