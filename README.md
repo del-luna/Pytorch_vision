@@ -30,6 +30,9 @@ using CIFAR-10 & CIFAR100<br>
 
 ![VGG19_acc](https://user-images.githubusercontent.com/46425982/149648888-95aab72d-7904-4e5f-8386-95406da94e51.png)
 
+- GoogLeNet
+
+![GoogLe_acc](https://user-images.githubusercontent.com/46425982/149659095-49152eb7-57d7-4664-9054-c42d7cfe2132.png)
 
 
 ## Requirements<br>
