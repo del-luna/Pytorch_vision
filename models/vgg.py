@@ -1,3 +1,8 @@
+'''
+VGG has 2-linear layers and dropout(0.5)
+but not implemented here
+'''
+
 import torch
 import torch.nn as nn
 

@@ -74,11 +74,13 @@ def main(args):
 
     if args.model_name == 'VGG19':
         model = VGG(args.model_name)
-    elif args.model_name == 'Resnet18':
+    elif args.model_name =='GoogLeNet':
+        model = GoogLeNet()
+    elif args.model_name == 'ResNet18':
         model = ResNet18()
-    elif args.model_name == 'Resnet34':
+    elif args.model_name == 'ResNet34':
         model = ResNet34()
-    elif args.model_name == 'Resnet50':
+    elif args.model_name == 'ResNet50':
         model = ResNet50()
     elif args.model_name == 'EfficientNetB0':
         pass
@@ -196,7 +198,7 @@ if __name__ == '__main__':
     parser.add_argument('--weight-decay', type=float, default=5e-4)
     parser.add_argument('--epochs', type=int, default=100)
     parser.add_argument('--num_workers',type=int, default=0)
-    parser.add_argument('--pretrained_path',type=str, default='./checkpoint/model_CIFAR10_VGG19_ckpt.tar')
+    parser.add_argument('--pretrained_path',type=str, default='')
     '''
     
     best_acc, start_epoch = 0, 1
