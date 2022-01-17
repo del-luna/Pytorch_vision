@@ -34,6 +34,9 @@ using CIFAR-10 & CIFAR100<br>
 
 ![GoogLe_acc](https://user-images.githubusercontent.com/46425982/149659095-49152eb7-57d7-4664-9054-c42d7cfe2132.png)
 
+- ResNet
+
+![resnet_acc](https://user-images.githubusercontent.com/46425982/149684737-3fe4c698-5727-4875-bae7-d2dcfb6e293b.png)
 
 ## Requirements<br>
 Pytorch -- 1.8.1
