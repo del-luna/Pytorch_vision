@@ -16,7 +16,8 @@ using CIFAR-10 & CIFAR100<br>
 |---|---|
 |<span style="color:blue">VGG19</span>|86.34|
 |<span style="color:blue">GoogLeNet</span>|85.24|
-|<span style="color:blue">ResNet18</span>|93.74|
+|<span style="color:blue">ResNet50</span>|93.74|
+|<span style="color:blue">DenseNet121</span>|89.97|
 
 <br>
 
